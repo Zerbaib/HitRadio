@@ -18,12 +18,11 @@ class SlashPause(commands.Cog):
 
         if (ctx.user.voice.channel != ctx.guild.me.voice.channel):
             return await ctx.respond("You need to be in ths same voice channel as me to execute this command.", ephemeral = True)
-        
+
         if player.paused:
             return await ctx.respond(f"{ctx.user.mention} i'm already paused at the moment!", ephemeral = True)
-        elif not player.paused:
-            await player.set_pause(True)
-            return await ctx.respond("Radio Paused.", ephemeral = True)
+        await player.set_pause(True)
+        return await ctx.respond("Radio Paused.", ephemeral = True)
 
 
 def setup(bot):

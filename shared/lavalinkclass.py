@@ -8,10 +8,8 @@ class LavalinkVoiceClient(discord.VoiceClient):
     def __init__(self, client: discord.Client, channel: discord.abc.Connectable):
         self.client = client
         self.channel = channel
-        
-        if hasattr(self.client, 'lavalink'):
-            self.lavalink = self.client.lavalink
-        else:
+
+        if not hasattr(self.client, 'lavalink'):
             self.client.lavalink = lavalinkclass.Client(client.user.id)
             self.client.lavalink.add_node(
                     LAVA_HOST,
@@ -19,7 +17,7 @@ class LavalinkVoiceClient(discord.VoiceClient):
                     LAVA_PASSWORD,
                     LAVA_REGION,
                     LAVA_NAME)
-            self.lavalink = self.client.lavalink
+        self.lavalink = self.client.lavalink
 
     async def on_voice_server_update(self, data):
         

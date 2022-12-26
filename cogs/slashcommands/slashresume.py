@@ -22,7 +22,7 @@ class SlashResume(commands.Cog):
         if player.paused:
             await player.set_pause(False)
             return await ctx.respond("Radio Resuming...", ephemeral = True)
-        elif not player.paused:
+        else:
             return await ctx.respond(f"{ctx.user.mention} I'm already playing the Hits!", ephemeral = True)
 
 
