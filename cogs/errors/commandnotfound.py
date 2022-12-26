@@ -12,9 +12,8 @@ class ErrorNotFound(commands.Cog):
     async def cog_command_error(self, ctx, error):
         
         print(error)
-        if isinstance(error, commands.CommandInvokeError):
-            if error is not None:
-                await ctx.respond("An error has occurred, if the issue persists contact the Author! Error Code=00x01", ephemeral= True)
+        if isinstance(error, commands.CommandInvokeError) and error is not None:
+            await ctx.respond("An error has occurred, if the issue persists contact the Author! Error Code=00x01", ephemeral= True)
 
         if isinstance(error, ConnectionResetError):
             await ctx.respond("An error has occurred, if the issue persists contact the Author! Error Code=00x02", ephemeral= True)

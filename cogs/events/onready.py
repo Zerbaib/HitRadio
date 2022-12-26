@@ -30,16 +30,17 @@ class status(commands.Cog):
         lavalink.add_event_hook(self.track_hook)
 
     async def track_hook(self, event):
-        if isinstance(event, lavalink.events.WebSocketClosedEvent):
-            if int(event.code) == 4006 and event.player.channel_id is not None:
-                print(event.code)
-                guild = self.bot.get_guild(int(event.player.guild_id))
-                channel = self.bot.get_channel(event.player.channel_id)
-                if not channel:
-                    return
+        if not isinstance(event, lavalink.events.WebSocketClosedEvent):
+            return
+        if int(event.code) == 4006 and event.player.channel_id is not None:
+            print(event.code)
+            guild = self.bot.get_guild(int(event.player.guild_id))
+            if channel := self.bot.get_channel(event.player.channel_id):
                 await guild.change_voice_state(channel=channel)
-            if int(event.code) == 4000 or int(event.code) == 1006:
-                await asyncio.sleep(5)
+            else:
+                return
+        if int(event.code) in {4000, 1006}:
+            await asyncio.sleep(5)
             
                 
 
